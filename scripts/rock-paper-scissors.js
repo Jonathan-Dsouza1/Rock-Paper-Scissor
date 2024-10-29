@@ -23,6 +23,47 @@ let computerMove = '';
             return computerMove;
         }
 
+        // Auto Play
+
+        let isAutoPlaying = false;
+        let intervalId;
+
+        function autoPlay() {
+            if(!isAutoPlaying){
+                intervalId = setInterval(() => {
+                    const playerMove = pickComputerMove();
+                    PlayGame(playerMove);
+                }, 1000);
+                isAutoPlaying = true;
+            }else{
+                isAutoPlaying = false;
+                clearInterval(intervalId)
+            }
+            
+        }
+
+        document.querySelector('.js-rock-button').addEventListener('click', () => {
+            PlayGame('rock')
+        })
+
+        document.querySelector('.js-paper-button').addEventListener('click', () => {
+            PlayGame('paper')
+        })
+
+        document.querySelector('.js-scissors-button').addEventListener('click', () => {
+            PlayGame('scissors')
+        })
+
+        document.body.addEventListener('keydown', (event) => {
+            if(event.key === 'r'){
+                PlayGame('rock');
+            } else if(event.key === 'p'){
+                PlayGame('paper');
+            } else if(event.key === 's'){
+                PlayGame('scissors');
+            }
+        })
+
         //Compare the player's and the computer's moves
 
         function PlayGame(playerMove) {
@@ -90,3 +131,5 @@ let computerMove = '';
         function UpdateScoreElement() {
             document.querySelector('.js-score').innerHTML = `Wins: ${score.win} Loses: ${score.lose} Ties: ${score.tie}`
         }
+
+        setInterval()
